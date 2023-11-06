@@ -1,0 +1,94 @@
+.calendar-container {
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.calendar-day {
+    padding: 15px;
+    border: 1px solid #ccc;
+    text-align: center;
+    cursor: pointer;
+}
+
+.calendar-day:hover {
+    background-color: #f0f0f0;
+}
+
+.current-month-day {
+    font-weight: bold;
+}
+
+h2 {
+    text-align: center;
+    margin: 0;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    max-width: 100%;
+}
+
+.task img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 5px;
+    flex-shrink: 0; /* Prevent the image from shrinking */
+}
+
+.task span {
+    flex-grow: 1; /* Allow the task name to take up remaining space */
+    overflow: hidden; /* Hide overflowing text */
+    white-space: nowrap; /* Prevent line breaks */
+    text-overflow: ellipsis; /* Display ellipsis (...) for overflow */
+}
+
+.calendar-day.expanded {
+    height: auto;
+}
+
+.task-details {
+    margin-top: 10px;
+}
+
+.calendar-day {
+    position: relative;
+}
+
+.calendar-day span {
+    display: block;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.past-day {
+    background-color: #f5f5f5; /* Grey background for past days */
+}
+
+.current-day span {
+    background-color: #007bff; /* Blue background for current day */
+    color: #fff;
+    border-radius: 50%;
+    padding: 5px 10px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
