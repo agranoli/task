@@ -34,10 +34,12 @@
     width: 50%;
 }
 
-.SidebarPhoto.mirrored {
-    transform: scaleX(-1); /* Mirror the image horizontally */
+.buttonImage.mirrored {
+    transform: scaleX(-1);
 }
-
+.element.mirrored {
+    transform: scaleX(-1);
+}
 .element {
     width: 80%;
     text-align: left;
@@ -65,7 +67,7 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
-.buttonImage {
+.buttonImage{
     display: flex;
     background-image: url('https://www.iconpacks.net/icons/2/free-arrow-left-icon-3099-thumb.png');
     background-size: cover;

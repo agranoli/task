@@ -5,19 +5,25 @@ import img from './ja.png';
 function Sidebar() {
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const sidebarElements = ['Home', 'Projects', 'Tasks']; // Add more elements as needed
+    const sidebarElements = ['Home', 'Projects', 'Tasks', '*User*'];
 
     const toggleSidebar = () => {
-        setIsCollapsed(!isCollapsed);
-        setCurrentIndex((currentIndex + 1) % sidebarElements.length); // Cycle through the elements
+        setCurrentIndex((currentIndex + 1) % sidebarElements.length); // Update currentIndex first
+        setIsCollapsed(!isCollapsed); // Then toggle isCollapsed
     };
 
     return (
         <div className={`mainSidebar ${isCollapsed ? 'collapsed' : ''}`}>
             <div className="topElement">
                 <div className="SidebarElement">
-                    <img src={img} className={`SidebarPhoto ${isCollapsed ? 'mirrored' : ''}`} alt="User" />
-                    <button className="buttonImage" onClick={toggleSidebar}></button>
+                    {!isCollapsed && (
+                        <img
+                            src={img}
+                            className="SidebarPhoto"
+                            alt="User"
+                        />
+                    )}
+                    <button className={`buttonImage ${isCollapsed && currentIndex !== 3 ? 'mirrored' : ''}`} onClick={toggleSidebar}></button>
                 </div>
                 <div className="SidebarElement">
                     {isCollapsed ? (
@@ -43,7 +49,16 @@ function Sidebar() {
                 </div>
             <div className="bottomElement">
                 <div className="profileElement">
-                    <p className="element">*User*</p>
+                    {isCollapsed ? (
+                        <img
+                            src="https://www.sunsetlearning.com/wp-content/uploads/2019/09/User-Icon-Grey-300x300.png"
+                            alt="Collapsed"
+                            className={`collapsedImage ${currentIndex !== 3 ? 'mirrored' : ''}`}
+                        />
+                    ) : (
+
+                        <p className={`element mirrored`}>{sidebarElements[3]}</p>
+                    )}
                 </div>
             </div>
         </div>
