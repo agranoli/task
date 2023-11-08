@@ -1,16 +1,27 @@
-import React, { useState } from "react";
-import "./tasks.css";
+    import React, {useEffect, useState} from "react";
+    import "./tasks.css";
 
-function Tasks() {
-    const [showForm, setShowForm] = useState(false);
 
-    const handleAddTaskClick = () => {
-        setShowForm(true);
-    };
 
-    const handleCloseFormClick = () => {
-        setShowForm(false);
-    };
+    function Tasks() {
+        const [showForm, setShowForm] = useState(false);
+
+        const handleAddTaskClick = () => {
+            setShowForm(true);
+        };
+
+        const handleCloseFormClick = () => {
+            setShowForm(false);
+        };
+
+        const [tasks, setTasks] = useState([]);
+
+        useEffect(() => {
+            fetch("http://localhost/datubazes/task/")
+                .then((response) => response.json())
+                .then((data) => setTasks(data))
+                .catch((error) => console.error("Error:", error));
+        }, []);
 
     return(
         <>

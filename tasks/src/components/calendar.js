@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import "./calendar.css";
 
 const MonthCalendar = () => {
@@ -7,22 +7,29 @@ const MonthCalendar = () => {
     const currentYear = currentDate.getFullYear();
     const lastDayOfMonth = new Date(currentYear, currentMonth, 0).getDate();
 
-    const tasks = [
-        { date: "06.11.2023", month: "11.11.2023" , taskName: "Meeting", profilePic: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png", dueDate: "2023-11-05", priority: 3 },
-        { date: "06.11.2023", month: "11.11.2023" , taskName: "Presentation", profilePic: "https://images.squarespace-cdn.com/content/v1/60d2052696041e771b8b7a60/6173a084-afec-4724-8b96-d2955e1844ec/%C2%A9MirjamLetsch-AUGURK-4.jpg", dueDate: "2023-11-12", priority: 4 },
-    ];
+    const [tasks, setTasks] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost/datubazes/task/")
+            .then((response) => response.json())
+            .then((data) => setTasks(data))
+            .catch((error) => console.error("Error:", error));
+    }, []);
 
     const updatedTasks = tasks.map(task => {
-        return {
-            ...task,
-            date: parseInt(task.date.toString().substring(0,2)),
-            month: parseInt(task.month.toString().substring(3, 5)),
-            taskName: task.taskName,
-            profilePic: task.profilePic,
-            dueDate: task.dueDate,
-            priority: task.priority
-        };
+            return {
+                ...task,
+                date: parseInt(task.dateAdded.toString().substring(0,2)),
+                month: parseInt(task.month.toString().substring(3, 5)),
+                normalDate: task.dateAdded,
+                taskName: task.task,
+                profilePic: task.profilePic,
+                dueDate: task.dueDate,
+                status: task.status,
+                priority: task.priority
+            };
     });
+
 
 
     console.log(updatedTasks);
@@ -54,15 +61,15 @@ const MonthCalendar = () => {
                         {updatedTasks.map(task => {
                             if (task.date === day) {
                                 return (
-                                    <div key={task.date} className="task" onClick={() => handleTaskClick(day)}>
-                                        <img src={task.profilePic} alt="Profile" />
+                                    <div key={task.normalDate} className="task" onClick={() => handleTaskClick(day)}>
+                                        <img src={task.profilePic} />
                                         <span>{task.taskName}</span>
                                         {expandedTask === day && (
                                             <div className="task-details">
-                                                <p>Due Date: {task.dueDate}</p>
-                                                <p>Priority: {task.priority}</p>
+                                                <p>Due Date: {task.normalDate}</p>
+                                                <p>Status: {task.status}</p>
                                                 <div className="star-rating">
-                                                    {[...Array(task.priority)].map((_, i) => (
+                                                    {Array.from({ length: task.priority }).map((_, i) => (
                                                         <span key={i} className="star">⭐</span>
                                                     ))}
                                                 </div>
