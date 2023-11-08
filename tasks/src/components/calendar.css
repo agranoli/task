@@ -15,10 +15,10 @@
 
 .calendar-grid {
     display: flex;
+    justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
-    align-self: center;
 }
 
 .calendar-day {
@@ -28,11 +28,11 @@
     flex:20%;
     min-height: 100px;
     max-height: 100%;
-    max-width: 180px;
+    max-width: 205px;
     border: 1px solid #ccc;
     text-align: center;
     cursor: pointer;
-    margin: 10px;
+    margin: 5px;
 }
 
 
@@ -57,17 +57,14 @@ h2 {
     height: 30px;
     border-radius: 50%;
     margin-right: 5px;
-    flex-shrink: 0;
 }
 
-.task span {
-    flex-grow: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
 
 .task-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin-top: 10px;
 }
 
@@ -79,7 +76,7 @@ h2 {
     display: flex;
     flex-direction: column;
     flex: 20%;
-    max-width: 160px;
+    max-width: 185px;
     position: relative;
     background-color: #007bff;
     color: #fff;

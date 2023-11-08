@@ -14,7 +14,7 @@ function Tasks() {
 
     return(
         <>
-            <div className="main">
+
                 <button className="add-task" onClick={showForm ? handleCloseFormClick : handleAddTaskClick}>
                     {showForm ? "+" : "+"}
                 </button>
@@ -63,10 +63,10 @@ function Tasks() {
                     <h1>Task</h1>
                     <div className="horizontal-line"></div>
                     <div className="task">
-                        <h1>Izmazgāt grīdu</h1>
+                        <h2>Izmazgāt grīdu</h2>
                     </div>
                     <div className="task">
-                        <h1>Izmazgāt grīdu</h1>
+                        <h2>Izmazgāt grīdu</h2>
                     </div>
                 </div>
                 <div className="vertical-line"></div>
@@ -74,10 +74,10 @@ function Tasks() {
                     <h1>Status</h1>
                     <div className="horizontal-line"></div>
                     <div className="status">
-                        <h1>In Progress</h1>
+                        <h2>In Progress</h2>
                     </div>
                     <div className="status">
-                        <h1>In Progress</h1>
+                        <h2>In Progress</h2>
                     </div>
                 </div>
                 <div className="vertical-line"></div>
@@ -85,10 +85,10 @@ function Tasks() {
                     <h1>Due Date</h1>
                     <div className="horizontal-line"></div>
                     <div className="due-date">
-                        <h1>06.11.2023</h1>
+                        <h2>06.11.2023</h2>
                     </div>
                     <div className="due-date">
-                        <h1>06.11.2023</h1>
+                        <h2>06.11.2023</h2>
                     </div>
                 </div>
                 <div className="vertical-line"></div>
@@ -96,14 +96,14 @@ function Tasks() {
                     <h1>Priority</h1>
                     <div className="horizontal-line"></div>
                     <div className="priority">
-                        <h1>⭐⭐⭐</h1>
+                        <h2>⭐⭐⭐</h2>
                     </div>
                     <div className="priority">
-                        <h1>⭐⭐⭐⭐⭐</h1>
+                        <h2>⭐⭐⭐⭐⭐</h2>
                     </div>
                 </div>
             </div>
-      </div>
+
       </>
     );
 }
