@@ -56,67 +56,53 @@
                     </div>
 
                 )}
-            <div className="tasksBox">
-                <div className="flex-column">
-                    <h1>User</h1>
-                    <div className="horizontal-line"></div>
-                    <div className="user">
-                        <div className="profile-circle">
-                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"></img>
+            {tasks.map((task) => (
+                <>
+                    <div className="flex-row-spacebetween">
+                        <div className="flex-column">
+                            <div className="user">
+                                <h1>User</h1>
+                                <div className="horizontal-line"></div>
+                                <img className="profile-circle" src="https://play-lh.googleusercontent.com/C9CAt9tZr8SSi4zKCxhQc9v4I6AOTqRmnLchsu1wVDQL0gsQ3fmbCVgQmOVM1zPru8UH=w240-h480-rw" alt="Profile" />
+                            </div>
                         </div>
-                        <div className="profile-circle">
-                            <img src="https://images.squarespace-cdn.com/content/v1/60d2052696041e771b8b7a60/6173a084-afec-4724-8b96-d2955e1844ec/%C2%A9MirjamLetsch-AUGURK-4.jpg"></img>
+                        <div className="vertical-line"></div>
+                        <div className="flex-column">
+                            <div className="task">
+                                <h1>Task</h1>
+                                <div className="horizontal-line"></div>
+                                <h2>{task.task}</h2>
+                            </div>
+                        </div>
+                        <div className="vertical-line"></div>
+                        <div className="flex-column">
+                            <div className="status">
+                                <h1>Status</h1>
+                                <div className="horizontal-line"></div>
+                                <h2>{task.status}</h2>
+                            </div>
+                        </div>
+                        <div className="vertical-line"></div>
+                        <div className="flex-column">
+                            <div className="due-date">
+                                <h1>DueDate</h1>
+                                <div className="horizontal-line"></div>
+                                <h2>{task.dueDate}</h2>
+                            </div>
+                        </div>
+                        <div className="vertical-line"></div>
+                        <div className="flex-column">
+                            <div className="priority">
+                                <h1>Priority</h1>
+                                <div className="horizontal-line"></div>
+                                <h2>{'☆'.repeat(task.priority)}</h2>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="vertical-line"></div>
-                <div className="flex-column">
-                    <h1>Task</h1>
-                    <div className="horizontal-line"></div>
-                    <div className="task">
-                        <h2>Izmazgāt grīdu</h2>
-                    </div>
-                    <div className="task">
-                        <h2>Izmazgāt grīdu</h2>
-                    </div>
-                </div>
-                <div className="vertical-line"></div>
-                <div className="flex-column">
-                    <h1>Status</h1>
-                    <div className="horizontal-line"></div>
-                    <div className="status">
-                        <h2>In Progress</h2>
-                    </div>
-                    <div className="status">
-                        <h2>In Progress</h2>
-                    </div>
-                </div>
-                <div className="vertical-line"></div>
-                <div className="flex-column">
-                    <h1>Due Date</h1>
-                    <div className="horizontal-line"></div>
-                    <div className="due-date">
-                        <h2>06.11.2023</h2>
-                    </div>
-                    <div className="due-date">
-                        <h2>06.11.2023</h2>
-                    </div>
-                </div>
-                <div className="vertical-line"></div>
-                <div className="flex-column">
-                    <h1>Priority</h1>
-                    <div className="horizontal-line"></div>
-                    <div className="priority">
-                        <h2>⭐⭐⭐</h2>
-                    </div>
-                    <div className="priority">
-                        <h2>⭐⭐⭐⭐⭐</h2>
-                    </div>
-                </div>
-            </div>
-
-      </>
+                </>
+            ))}
+        </>
     );
-}
+    }
 
 export default Tasks;

@@ -17,17 +17,18 @@ const MonthCalendar = () => {
     }, []);
 
     const updatedTasks = tasks.map(task => {
-            return {
-                ...task,
-                date: parseInt(task.dateAdded.toString().substring(0,2)),
-                month: parseInt(task.month.toString().substring(3, 5)),
-                normalDate: task.dateAdded,
-                taskName: task.task,
-                profilePic: task.profilePic,
-                dueDate: task.dueDate,
-                status: task.status,
-                priority: task.priority
-            };
+        const monthNumber = task.month ? parseInt(task.month.toString().substring(3, 5)) : null;
+        return {
+            ...task,
+            date: parseInt(task.dueDate.toString().substring(0,2)),
+            monthNumber: monthNumber,
+            normalDate: task.dueDate,
+            taskName: task.task,
+            profilePic: task.profilePic,
+            dueDate: task.dueDate,
+            status: task.status,
+            priority: task.priority
+        };
     });
 
 
@@ -59,10 +60,10 @@ const MonthCalendar = () => {
                     <div key={day} className={`calendar-day ${expandedTask === day ? 'expanded' : ''} ${isPastDay(day) ? 'past-day' : ''} ${day === currentDate.getDate() ? 'current-day' : ''}`}>
                         <h4>{day}</h4>
                         {updatedTasks.map(task => {
-                            if (task.date === day) {
+                            if (task.date === day && task.monthNumber === currentMonth) {
                                 return (
                                     <div key={task.normalDate} className="task" onClick={() => handleTaskClick(day)}>
-                                        <img src={task.profilePic} />
+                                        <img src="https://play-lh.googleusercontent.com/C9CAt9tZr8SSi4zKCxhQc9v4I6AOTqRmnLchsu1wVDQL0gsQ3fmbCVgQmOVM1zPru8UH=w240-h480-rw" />
                                         <span>{task.taskName}</span>
                                         {expandedTask === day && (
                                             <div className="task-details">
@@ -70,10 +71,12 @@ const MonthCalendar = () => {
                                                 <p>Status: {task.status}</p>
                                                 <div className="star-rating">
                                                     {Array.from({ length: task.priority }).map((_, i) => (
-                                                        <span key={i} className="star">⭐</span>
+                                                        <span key={i} className="star">☆</span>
                                                     ))}
                                                 </div>
+                                                <div className="horizontal-line"></div>
                                             </div>
+
                                         )}
                                     </div>
                                 );
