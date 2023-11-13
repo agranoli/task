@@ -1,10 +1,10 @@
 import "./App.css";
-import Adder from "./components/Adder";
+import AddProject from "./components/AddProject";
 
 function App(){
     return (
         <div className="mainApp">
-            <Adder />
+            <AddProject />
         </div>
     );
 }
