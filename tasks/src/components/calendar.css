@@ -1,9 +1,11 @@
+/* Default styles for larger screens */
 .calendar-container {
     display: flex;
     flex-direction: row;
     max-width: 600px;
     margin: 0 auto;
     font-family: Arial, sans-serif;
+    flex-wrap: wrap;
 }
 
 .calendar-header {
@@ -25,7 +27,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex:20%;
+    flex: 20%;
     min-height: 100px;
     max-height: 100%;
     max-width: 205px;
@@ -34,7 +36,6 @@
     cursor: pointer;
     margin: 5px;
 }
-
 
 .current-month-day {
     font-weight: bold;
@@ -59,13 +60,13 @@ h2 {
     margin-right: 5px;
 }
 
-
 .task-details {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-top: 10px;
+    height: 100%;
 }
 
 .past-day {
@@ -83,3 +84,8 @@ h2 {
     padding: 5px 10px;
 }
 
+@media (max-width: 768px) {
+    .calendar-day{
+        flex: 40%;
+    }
+}

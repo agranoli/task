@@ -69,9 +69,11 @@ const MonthCalendar = () => {
                                             <div className="task-details">
                                                 <p>Due Date: {task.normalDate}</p>
                                                 <p>Status: {task.status}</p>
+                                                <p>Priority: </p>
                                                 <div className="star-rating">
+
                                                     {Array.from({ length: task.priority }).map((_, i) => (
-                                                        <span key={i} className="star">☆</span>
+                                                        <p key={i} className="star">☆</p>
                                                     ))}
                                                 </div>
                                                 <div className="horizontal-line"></div>
