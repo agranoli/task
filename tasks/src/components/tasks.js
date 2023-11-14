@@ -18,18 +18,24 @@ function SortableList() {
         sortList(event.target.value);
     };
 
-    const sortList = (sortOrder) => {
+    const sortList = (sortOption) => {
+        const [sortOrder] = sortOption.split('Pri');
         const sortedItems = [...items].sort((a, b) => {
-            if (sortOrder === 'asc' || sortOrder === 'desc') {
+            if ((sortOrder === 'asc' || sortOrder === 'desc')) {
                 const dateA = new Date(a.dueDate);
                 const dateB = new Date(b.dueDate);
                 return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+            } else if ((sortOrder === 'ascPri' || sortOrder === 'descPri')) {
+                const priA = a.priority;
+                const priB = b.priority;
+                return sortOrder === 'asc' ? priA - priB : priB - priA;
             }
             return 0;
         });
 
         setItems(sortedItems);
     };
+
 
     const handleAddTaskClick = () => {
         setShowForm(true);
@@ -54,6 +60,8 @@ function SortableList() {
                     <option value="">Select a sort method</option>
                     <option value="asc">Sort by date ↑</option>
                     <option value="desc">Sort by date ↓</option>
+                    <option value="ascPri">Sort by priority ↓</option>
+                    <option value="descPri">Sort by priority ↑</option>
                 </select>
             </div>
             {showForm && (
