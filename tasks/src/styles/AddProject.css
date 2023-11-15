@@ -1,10 +1,11 @@
-.mainAdder{
-    height:100vh;
-    width:100vw;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+.mainAdder {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .addBox {
     height: 65vh;
     width: 35vw;
@@ -15,52 +16,123 @@
     align-items: center;
     justify-content: center;
 }
-.addHeader{
-    height:15%;
-    width:90%;
-    display:flex;
-    align-items:center;
+
+.addHeader {
+    height: 15%;
+    width: 90%;
+    display: flex;
+    align-items: center;
     justify-content: center;
 }
-.addHeading{
-    display:flex;
-    font-size:24px;
+
+.addHeading {
+    display: flex;
+    font-size: 24px;
     color: #444444;
 }
-.addElements{
-    width:100%;
-    height:60%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
+
+.addElements {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
-.addColumn{
-    display:flex;
+
+.addColumn {
+    display: flex;
+    width: 70%;
+    flex-direction: column;
+}
+.addColumnParticipants {
+    display: flex;
+    width: 70%;
     height:33%;
-    width:70%;
+    flex-direction: column;
+    margin:auto;
+}
+.options{
+    display:flex;
+    overflow:auto;
+    margin: auto;
+    height:30px;
+    width:50%;
+    background-color: white;
+    border: 1px solid;
+    border-radius: 3px;
     flex-direction:column;
 }
-.addInput{
+.addColumnAuthor {
+    display: flex;
+    width: 70%;
+    flex-direction: column;
+}
+.search{
+    display:flex;
+    width:100%;
+    flex-direction:row;
+    margin-bottom: 15px;
+}
+.addInput {
     background-color: rgba(166, 164, 164, 0.56);
     color: #444444;
-    border:2px solid gray;
+    border: 2px solid gray;
     border-radius: 3px;
     display: flex;
-    width:100%;
+    width: 100%;
+    margin-bottom: 10px;
 }
-.addButtons{
-    width:100%;
-    height:20%;
+
+.selectedParticipantsBox {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: rgba(166, 164, 164, 0.56);
+    border: 2px solid gray;
+    border-radius: 3px;
+}
+
+.selectedParticipants {
+    list-style: none;
+    padding: 0;
+}
+.addParticipants{
     display:flex;
-    flex-direction:row;
-    justify-content:space-evenly;
-    align-items:center;
+    width:100%;
+    flex-direction:column;
+    margin-bottom:25px;
 }
-.addButs{
-    height:25%;
-    width:30%;
-    border:2px solid gray;
+
+.selectedParticipants li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: #fff;
+}
+
+.removeLink {
+    color: red;
+    cursor: pointer;
+}
+
+.addButtons {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.addButs {
+    height: 25%;
+    width: 30%;
+    border: 2px solid gray;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -68,5 +140,44 @@
     background-color: rgba(166, 164, 164, 0.56);
     color: #444444;
     cursor: pointer;
-    text-decoration:none;
+    text-decoration: none;
+}
+.selection-box {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    height: 80px; /* Set a fixed height */
+    overflow: auto; /* Add this line to enable scrolling */
+    margin: auto;
+    background-color: rgba(166, 164, 164, 0.56);
+    border: 2px solid gray;
+    border-radius: 3px;
+}
+
+.selection-box p {
+    font-size: 16px;
+    color: #444444;
+    margin-bottom: 5px;
+}
+
+.selection-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.selection-box li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: #fff;
+}
+
+.selection-box span {
+    color: red;
+    cursor: pointer;
 }
