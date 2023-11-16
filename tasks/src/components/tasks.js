@@ -5,6 +5,11 @@ function SortableList() {
     const [sortBy, setSortBy] = useState('');
     const [items, setItems] = useState([]);
     const [showForm, setShowForm] = useState(false);
+    const [formData, setFormData] = useState({
+        user: '',
+        task: '',
+        rating: ''
+    })
 
     useEffect(() => {
         fetch("http://localhost/datubazes/task/")
@@ -45,11 +50,32 @@ function SortableList() {
         setShowForm(false);
     };
 
-    const handleFormSubmit = () => {
-        // Implement form submission logic here
-        // You may want to send data to the server and update the state accordingly
-    };
+    const handleInputChange = (e) => {
+        const { task, value } = e.target;
+        setFormData({
+          ...formData,
+          [task]: value,
+        });
+      };
 
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+    
+        // Implement form validation logic if needed
+    
+        try {
+          const response = await fetch('your-api-endpoint', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+          });
+    
+        } catch (error) {
+          console.error('Error submitting form:', error);
+        }
+      };
     return (
         <>
             <div className="flex-row-spacebetween">
@@ -65,30 +91,69 @@ function SortableList() {
                 </select>
             </div>
             {showForm && (
-                <div className="add-task-form">
+                <form className="add-task-form" onSubmit={handleFormSubmit}>
                     <button className="close-button" onClick={handleCloseFormClick}>Close</button>
                     <h1>Add A New Task</h1>
-                    <select>
-                        <option>Kevins</option>
-                        <option>***</option>
-                        <option>***</option>
+                    <select value={formData.user} onChange={handleInputChange}>
+                        <option value="1">Kevins</option>
+                        <option value="2">***</option>
+                        <option value="3">***</option>
                     </select>
-                    <input type="text" placeholder="Insert A Task...."/>
-                    <input type="date"/>
+                    <input type="text" placeholder="Insert A Task...." value={formData.task} onChange={handleInputChange}/>
+                    <input type="date" value={formData.dueDate} onChange={handleInputChange}/>
                     <div className="star-rating">
-                        <input type="radio" id="star5" name="rating" value="5"/>
+                        <input
+                            type="radio"
+                            id="star5"
+                            name="rating"
+                            value="5"
+                            checked={formData.rating === '5'}
+                            onChange={handleInputChange}
+                        />
                         <label htmlFor="star5">★</label>
-                        <input type="radio" id="star4" name="rating" value="4"/>
+
+                        <input
+                            type="radio"
+                            id="star4"
+                            name="rating"
+                            value="4"
+                            checked={formData.rating === '4'}
+                            onChange={handleInputChange}
+                        />
                         <label htmlFor="star4">★</label>
-                        <input type="radio" id="star3" name="rating" value="3"/>
+
+                        <input
+                            type="radio"
+                            id="star3"
+                            name="rating"
+                            value="3"
+                            checked={formData.rating === '3'}
+                            onChange={handleInputChange}
+                        />
                         <label htmlFor="star3">★</label>
-                        <input type="radio" id="star2" name="rating" value="2"/>
+
+                        <input
+                            type="radio"
+                            id="star2"
+                            name="rating"
+                            value="2"
+                            checked={formData.rating === '2'}
+                            onChange={handleInputChange}
+                        />
                         <label htmlFor="star2">★</label>
-                        <input type="radio" id="star1" name="rating" value="1"/>
+
+                        <input
+                            type="radio"
+                            id="star1"
+                            name="rating"
+                            value="1"
+                            checked={formData.rating === '1'}
+                            onChange={handleInputChange}
+                        />
                         <label htmlFor="star1">★</label>
-                    </div>
-                    <button className="add-task-submit" onClick={handleFormSubmit}>Submit</button>
-                </div>
+                        </div>
+                    <button className="add-task-submit" type="submit">Submit</button>
+                </form>
             )}
             {items.map((task) => (
                 <div key={task.id} className="flex-row-spacebetween">
