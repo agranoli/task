@@ -7,7 +7,7 @@ function App() {
         <>
             <div className={style.main}>
                 <Tasks  />
-                {/*<MonthCalendar />*/}
+                <MonthCalendar />
             </div>
         </>
     );

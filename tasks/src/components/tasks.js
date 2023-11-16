@@ -1,46 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import "./tasks.css";
 
-function SortableList() {
+const SortableList = () => {
     const [sortBy, setSortBy] = useState('');
     const [items, setItems] = useState([]);
     const [showForm, setShowForm] = useState(false);
-    const [formData, setFormData] = useState({
-        user: '',
-        task: '',
-        rating: ''
-    })
+    const [selectedValue, setSelectedValue] = useState('');
+    const [task, setTask] = useState('');
+    const [dueDate, setDueDate] = useState('');
+    const [starRating, setStarRating] = useState('');
 
     useEffect(() => {
         fetch("http://localhost/datubazes/task/")
             .then((response) => response.json())
-            .then((data) => setItems(data))
+            .then((data) => {
+                const sortedItems = sortList(sortBy, data);
+                setItems(sortedItems);
+            })
             .catch((error) => console.error("Error:", error));
-    }, []);
+    }, [sortBy]);
 
     const handleSortChange = (event) => {
-        setSortBy(event.target.value);
-        sortList(event.target.value);
+        const sortOption = event.target.value;
+        setSortBy(sortOption);
     };
 
-    const sortList = (sortOption) => {
-        const [sortOrder] = sortOption.split('Pri');
+    const sortList = (sortOption, items) => {
         const sortedItems = [...items].sort((a, b) => {
-            if ((sortOrder === 'asc' || sortOrder === 'desc')) {
+            if (sortOption === 'asc') {
                 const dateA = new Date(a.dueDate);
                 const dateB = new Date(b.dueDate);
-                return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
-            } else if ((sortOrder === 'ascPri' || sortOrder === 'descPri')) {
+                return dateA - dateB;
+            } else if (sortOption === 'desc') {
+                const dateA = new Date(a.dueDate);
+                const dateB = new Date(b.dueDate);
+                return dateB - dateA;
+            } else if (sortOption === 'descPri') {
                 const priA = a.priority;
                 const priB = b.priority;
-                return sortOrder === 'asc' ? priA - priB : priB - priA;
+                return priB - priA;
+            } else if (sortOption === 'ascPri') {
+                const priA = a.priority;
+                const priB = b.priority;
+                return priA - priB;
             }
             return 0;
         });
 
-        setItems(sortedItems);
+        return sortedItems;
     };
-
 
     const handleAddTaskClick = () => {
         setShowForm(true);
@@ -50,32 +58,33 @@ function SortableList() {
         setShowForm(false);
     };
 
-    const handleInputChange = (e) => {
-        const { task, value } = e.target;
-        setFormData({
-          ...formData,
-          [task]: value,
-        });
-      };
+    const handleSelectChange = (event) => {
+        const value = event.target.value;
+        setSelectedValue(value);
+    };
 
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
-    
-        // Implement form validation logic if needed
-    
-        try {
-          const response = await fetch('your-api-endpoint', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-    
-        } catch (error) {
-          console.error('Error submitting form:', error);
-        }
-      };
+
+    const handleFormSubmit = async () => {
+        const dateObject = new Date(dueDate);
+        const day = String(dateObject.getDate()).padStart(2, '0');
+        const month = String(dateObject.getMonth() + 1).padStart(2, '0');
+        const year = dateObject.getFullYear();
+        const formattedDate = `${day}.${month}.${year}`;
+
+        let cleanData = { task, dueDate: formattedDate, starRating };
+
+            let response = await fetch('http://localhost/datubazes/task/taskInsert.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(cleanData),
+            });
+            response = await response.json();
+            console.log(response);
+
+    };
+
     return (
         <>
             <div className="flex-row-spacebetween">
@@ -91,74 +100,59 @@ function SortableList() {
                 </select>
             </div>
             {showForm && (
-                <form className="add-task-form" onSubmit={handleFormSubmit}>
+                <div className="add-task-form">
                     <button className="close-button" onClick={handleCloseFormClick}>Close</button>
                     <h1>Add A New Task</h1>
-                    <select value={formData.user} onChange={handleInputChange}>
+                    <p className="vaidation" id="userP"></p>
+                    <select name="user" id="user" value={selectedValue} onChange={handleSelectChange}>
+                        <option value="">Choose a user!</option>
                         <option value="1">Kevins</option>
                         <option value="2">***</option>
                         <option value="3">***</option>
                     </select>
-                    <input type="text" placeholder="Insert A Task...." value={formData.task} onChange={handleInputChange}/>
-                    <input type="date" value={formData.dueDate} onChange={handleInputChange}/>
-                    <div className="star-rating">
-                        <input
-                            type="radio"
-                            id="star5"
-                            name="rating"
-                            value="5"
-                            checked={formData.rating === '5'}
-                            onChange={handleInputChange}
-                        />
-                        <label htmlFor="star5">★</label>
 
-                        <input
-                            type="radio"
-                            id="star4"
-                            name="rating"
-                            value="4"
-                            checked={formData.rating === '4'}
-                            onChange={handleInputChange}
-                        />
-                        <label htmlFor="star4">★</label>
+                    <p className="vaidation" id="taskP"></p>
+                    <input
+                        type="text"
+                        id="task"
+                        name="task"
+                        placeholder="Insert A Task...."
+                        value={task}
+                        onChange={(e) => setTask(e.target.value)}
+                    />
 
-                        <input
-                            type="radio"
-                            id="star3"
-                            name="rating"
-                            value="3"
-                            checked={formData.rating === '3'}
-                            onChange={handleInputChange}
-                        />
-                        <label htmlFor="star3">★</label>
+                    <p className="vaidation" id="dateP"></p>
+                    <input
+                        type="date"
+                        id="date"
+                        name="dueDate"
+                        value={dueDate}
+                        onChange={(e) => setDueDate(e.target.value)}
+                    />
 
-                        <input
-                            type="radio"
-                            id="star2"
-                            name="rating"
-                            value="2"
-                            checked={formData.rating === '2'}
-                            onChange={handleInputChange}
-                        />
-                        <label htmlFor="star2">★</label>
+                    <p className="vaidation" id="ratingP"></p>
+                    <div className="star-rating" id="rating">
+                        {[5, 4, 3, 2, 1].map((rating) => (
+                            <>
+                                <input
+                                    type="radio"
+                                    id={`star${rating}`}
+                                    name="rating"
+                                    value={rating}
+                                    checked={starRating === `${rating}`}
+                                    onChange={(e) => setStarRating(e.target.value)}
+                                />
+                                <label htmlFor={`star${rating}`}>★</label>
+                            </>
+                        ))}
+                    </div>
 
-                        <input
-                            type="radio"
-                            id="star1"
-                            name="rating"
-                            value="1"
-                            checked={formData.rating === '1'}
-                            onChange={handleInputChange}
-                        />
-                        <label htmlFor="star1">★</label>
-                        </div>
-                    <button className="add-task-submit" type="submit">Submit</button>
-                </form>
+                    <button className="add-task-submit" type="submit" onClick={handleFormSubmit}>Submit</button>
+                </div>
             )}
             {items.map((task) => (
-                <div key={task.id} className="flex-row-spacebetween">
                     <>
-                        <div className="flex-row-spacebetween">
+                        <div key={task.id} className="flex-row-spacebetween">
                             <div className="flex-column">
                                 <div className="user">
                                     <h1>User</h1>
@@ -166,6 +160,7 @@ function SortableList() {
                                     <img className="profile-circle"
                                          src="https://play-lh.googleusercontent.com/C9CAt9tZr8SSi4zKCxhQc9v4I6AOTqRmnLchsu1wVDQL0gsQ3fmbCVgQmOVM1zPru8UH=w240-h480-rw"
                                          alt="Profile"/>
+                                    <h3>*UserName*</h3>
                                 </div>
                             </div>
                             <div className="vertical-line"></div>
@@ -181,7 +176,7 @@ function SortableList() {
                                 <div className="status">
                                     <h1>Status</h1>
                                     <div className="horizontal-line"></div>
-                                    <h2>{task.status}</h2>
+                                    <h2>{task.progress}</h2>
                                 </div>
                             </div>
                             <div className="vertical-line"></div>
@@ -202,7 +197,6 @@ function SortableList() {
                             </div>
                         </div>
                 </>
-                </div>
             ))}
         </>
     );
