@@ -1,0 +1,79 @@
+.mainSidebar {
+    height: 100vh;
+    width: 200px; /* Initial width of the sidebar */
+    display: flex;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    flex-direction: column;
+    background-color: #dcdcdc;
+    transition: width 0.3s ease; /* Transition for smooth width change */
+}
+
+.mainSidebar.collapsed {
+    width: 50px; /* Collapsed width of the sidebar */
+}
+
+.topElement {
+    height: 90%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.SidebarElement {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    color: #2c2c2c;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.SidebarPhoto {
+    display: flex;
+    width: 50%;
+}
+
+.buttonImage.mirrored {
+    transform: scaleX(-1);
+}
+.element.mirrored {
+    transform: scaleX(-1);
+}
+.element {
+    width: 80%;
+    text-align: left;
+}
+
+.bottomElement {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    transform: scaleX(-1);
+}
+.collapsedImage{
+    display:flex;
+    width:35px;
+    height:35px;
+}
+.profileElement {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    color: #2c2c2c;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.buttonImage{
+    display: flex;
+    background-image: url('https://www.iconpacks.net/icons/2/free-arrow-left-icon-3099-thumb.png');
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    margin-left: 15px; /* Adjust the margin as needed */
+    cursor: pointer;
+    padding: 12px;
+}
