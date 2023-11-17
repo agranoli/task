@@ -1,5 +1,5 @@
-import "../styles/AddProject.css";
 import React, { useState, useEffect } from 'react';
+import '../styles/AddProject.css';
 
 const ItemSelection = ({
                            selectedParticipants,
@@ -14,7 +14,9 @@ const ItemSelection = ({
 
     const fetchItems = async (query) => {
         try {
-            const response = await fetch(`http://localhost:8888/janire/GetUsers.php?query=${query}`);
+            const response = await fetch(
+                `http://localhost:8888/janire/GetUsers.php?query=${query}`
+            );
             if (response.ok) {
                 const data = await response.json();
                 setItems(data);
@@ -29,6 +31,10 @@ const ItemSelection = ({
     const handleInputChange = (e) => {
         const inputQuery = e.target.value;
         setQuery(inputQuery);
+
+        // Debounce the input to reduce unnecessary API calls
+        clearTimeout(typingTimeout);
+        setTypingTimeout(setTimeout(() => fetchItems(inputQuery), 300));
     };
 
     const handleItemClick = (selectedItem) => {
@@ -44,19 +50,20 @@ const ItemSelection = ({
     };
 
     // Filter out selected participants from the options
-    const filteredOptions = items.filter((item) => !selectedParticipants.includes(item.username));
+    const filteredOptions = items.filter(
+        (item) => !selectedParticipants.includes(item.username)
+    );
 
     return (
         <div className="addParticipats">
             <div className="search">
-                <input
-                    type="text"
-                    value={query}
-                    onChange={handleInputChange}
-                />
+                <input type="text" value={query} onChange={handleInputChange} />
                 <ul className="options">
                     {filteredOptions.map((item) => (
-                        <li key={item.username} onClick={() => handleItemClick(item.username)}>
+                        <li
+                            key={item.username}
+                            onClick={() => handleItemClick(item.username)}
+                        >
                             {item.username}
                         </li>
                     ))}
@@ -67,7 +74,8 @@ const ItemSelection = ({
                 <ul>
                     {selectedParticipants.map((participant) => (
                         <li key={participant}>
-                            {participant} <span onClick={() => handleRemoveClick(participant)}>Remove</span>
+                            {participant}{' '}
+                            <span onClick={() => handleRemoveClick(participant)}>Remove</span>
                         </li>
                     ))}
                 </ul>
@@ -82,15 +90,22 @@ function AddProject() {
     const [participants, setParticipants] = useState([]);
     const [selectedParticipants, setSelectedParticipants] = useState([]);
 
-    const handleProjectSubmission = async () => {
+    const handleProjectSubmission = async (e, isTeamSubmission = false) => {
+        e.preventDefault();
+
+        const projectLeader = document.getElementById('author').value; // Corrected: Use the same ID for both project and team
+        const apiEndpoint = isTeamSubmission
+            ? 'http://localhost:8888/janire/insertTeam.php'
+            : 'http://localhost:8888/janire/insertProject.php';
+
         const data = {
             projectName,
-            projectLeader: "selected_leader", // Update this with the selected project leader
+            projectLeader,
             selectedParticipants,
         };
 
         try {
-            const response = await fetch('http://localhost:8888/janire/insertProject.php', {
+            const response = await fetch(apiEndpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -99,12 +114,15 @@ function AddProject() {
             });
 
             if (response.ok) {
-                console.log('Project created successfully');
+                console.log('Submission successful');
+                // You may want to update the UI here based on success
             } else {
-                console.error('Error creating project:', response.statusText);
+                console.error('Error submitting data:', response.statusText);
+                // You may want to handle the error and update the UI accordingly
             }
         } catch (error) {
-            console.error('Error creating project:', error);
+            console.error('Error submitting data:', error);
+            // You may want to handle the error and update the UI accordingly
         }
     };
 
@@ -112,13 +130,15 @@ function AddProject() {
         if (participantsQuery.trim() !== '') {
             fetchItems(participantsQuery);
         } else {
-            setParticipants([]); // No people show up by default
+            setParticipants([]);
         }
     }, [participantsQuery]);
 
     const fetchItems = async (query) => {
         try {
-            const response = await fetch(`http://localhost:8888/janire/GetUsers.php?query=${query}`);
+            const response = await fetch(
+                `http://localhost:8888/janire/GetUsers.php?query=${query}`
+            );
             if (response.ok) {
                 const data = await response.json();
                 setParticipants(data);
@@ -131,19 +151,21 @@ function AddProject() {
     };
 
     const handleSelectParticipant = (participant) => {
-        // Toggle selection
         if (selectedParticipants.includes(participant)) {
-            setSelectedParticipants(selectedParticipants.filter((selected) => selected !== participant));
+            setSelectedParticipants(
+                selectedParticipants.filter((selected) => selected !== participant)
+            );
         } else {
             setSelectedParticipants([...selectedParticipants, participant]);
         }
 
-        // Clear the search query when a participant is selected
         setParticipantsQuery('');
     };
 
     const handleRemoveParticipant = (participant) => {
-        setSelectedParticipants(selectedParticipants.filter((selected) => selected !== participant));
+        setSelectedParticipants(
+            selectedParticipants.filter((selected) => selected !== participant)
+        );
     };
 
     return (
@@ -152,7 +174,10 @@ function AddProject() {
                 <div className="addHeader">
                     <p className="addHeading">Add Project</p>
                 </div>
-                <div className="addElements">
+                <form
+                    className="addElements"
+                    onSubmit={(e) => handleProjectSubmission(e, false)}
+                >
                     <label className="addColumn">
                         Project Name:
                         <input
@@ -183,13 +208,22 @@ function AddProject() {
                             <option>author #3</option>
                         </select>
                     </label>
-                </div>
-                <div className="addButtons">
-                    <button className="addButs">Close</button>
-                    <button type="submit" className="addButs" onClick={handleProjectSubmission}>
-                        Confirm
-                    </button>
-                </div>
+                    <div className="addButtons">
+                        <button type="button" className="addButs">
+                            Close
+                        </button>
+                        <button type="submit" className="addButs">
+                            Confirm Project
+                        </button>
+                        <button
+                            type="button"
+                            className="addButs"
+                            onClick={(e) => handleProjectSubmission(e, true)}
+                        >
+                            Confirm Team
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     );
