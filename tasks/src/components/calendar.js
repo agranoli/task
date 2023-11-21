@@ -9,6 +9,15 @@ const MonthCalendar = () => {
 
     const [tasks, setTasks] = useState([]);
 
+    const [user, setUser] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost/datubazes/task/user.php')
+            .then((response) => response.json())
+            .then((data) => setUser(data))
+            .catch((error) => console.error('Error:', error));
+    }, []);
+
     useEffect(() => {
         fetch("http://localhost/datubazes/task/")
             .then((response) => response.json())
@@ -43,6 +52,11 @@ const MonthCalendar = () => {
         return today < currentDate;
     };
 
+    const getUserImageById = (userId) => {
+        const userObj = user.find((userData) => userData.id === userId);
+        return userObj ? userObj.image : "https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg";
+    };
+
     return (
         <>
             <h1>
@@ -74,19 +88,19 @@ const MonthCalendar = () => {
                                     onClick={() => handleTaskClick(day)}
                                 >
                                     <img
-                                        src="https://play-lh.googleusercontent.com/C9CAt9tZr8SSi4zKCxhQc9v4I6AOTqRmnLchsu1wVDQL0gsQ3fmbCVgQmOVM1zPru8UH=w240-h480-rw"
+                                        src={getUserImageById(task.userID)}
                                         alt="task"
                                     />
                                     <span>{task.taskName}</span>
                                     {expandedTask === day && (
                                         <div className="task-details">
                                             <p>Due Date: {task.normalDate}</p>
-                                            <p>Status: {task.status}</p>
+                                            <p>Status: {task.progress}</p>
                                             <p>Priority: </p>
                                             <div className="star-rating">
                                                 {Array.from({ length: task.priority }).map((_, i) => (
                                                     <p key={i} className="star">
-                                                        ☆
+                                                        ★
                                                     </p>
                                                 ))}
                                             </div>
