@@ -1,21 +1,20 @@
 import "./App.css";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import TaskPage from "./pages/taskPage";
+import ProjectPage from "./pages/ProjectPage";
 
-import style from "./App.css";
-import React from 'react';
-import Tasks from "./components/tasks";
-import MonthCalendar from "./components/calendar";
-import Sidebar from "./components/Sidebar";
-import AddProject from "./components/AddProject";
-
-    function App(){
-        return (
-            <>
-                <div className="main">
-                    <Tasks  />
-                    <MonthCalendar />
-                    <Sidebar />
-                    <AddProject />
-                </div>
-            </>
+function App(){
+    return (
+        <Router>
+            <div className="main">
+                <Routes>
+                    {/*<Route path="/" element={} />*/}
+                    <Route path="/tasks" element={<TaskPage />} />
+                    <Route path="/project" element={<ProjectPage />} />
+                </Routes>
+            </div>
+        </Router>
     );
-    }
+}
+
+export default App;

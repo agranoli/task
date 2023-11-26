@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/Sidebar.css';
+import { Link } from "react-router-dom";
 import img from './ja.png';
 
 function Sidebar() {
@@ -29,21 +30,21 @@ function Sidebar() {
                     {isCollapsed ? (
                         <img src="https://cdn.pixabay.com/photo/2014/04/03/00/41/house-309113_1280.png" alt="Collapsed" className="collapsedImage" />
                     ) : (
-                        <p className="element">{sidebarElements[0]}</p>
+                        <Link to="/" className="element">{sidebarElements[0]}</Link>
                     )}
                 </div>
                 <div className="SidebarElement">
                     {isCollapsed ? (
                         <img src="https://icones.pro/wp-content/uploads/2021/04/icone-de-dossier-symbole-png-gris.png" alt="Collapsed" className="collapsedImage" />
                     ) : (
-                        <p className="element">{sidebarElements[1]}</p>
+                        <Link to="/project" className="element">{sidebarElements[1]}</Link>
                     )}
                 </div>
                 <div className="SidebarElement">
                     {isCollapsed ? (
                         <img src="https://cdn.icon-icons.com/icons2/2483/PNG/512/task_check_embossed_icon_149858.png" alt="Collapsed" className="collapsedImage" />
                     ) : (
-                        <p className="element">{sidebarElements[2]}</p>
+                        <Link to="/tasks" className="element">{sidebarElements[2]}</Link>
                     )}
                 </div>
                 </div>

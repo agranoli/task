@@ -43,6 +43,8 @@
 .element {
     width: 80%;
     text-align: left;
+    text-decoration: none;
+    color:black;
 }
 
 .bottomElement {
@@ -76,4 +78,10 @@
     margin-left: 15px; /* Adjust the margin as needed */
     cursor: pointer;
     padding: 12px;
+}
+@media only screen and (max-width: 450px) {
+    .mainSidebar{
+        min-height:100vh;
+        width:100vw;
+    }
 }
