@@ -7,7 +7,6 @@ import MonthCalendar from "./components/calendar";
 import Sidebar from "./components/Sidebar";
 import AddProject from "./components/AddProject";
 
-function App() {
     function App(){
         return (
             <>
@@ -15,11 +14,8 @@ function App() {
                     <Tasks  />
                     <MonthCalendar />
                     <Sidebar />
+                    <AddProject />
                 </div>
             </>
-        <div className="mainApp">
-            <Sidebar />
-            <AddProject />
-        </div>
     );
     }
