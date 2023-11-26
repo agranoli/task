@@ -1,3 +1,4 @@
+import "./App.css";
 
 import style from "./App.css";
 import React from 'react';
@@ -7,15 +8,18 @@ import Sidebar from "./components/Sidebar";
 import AddProject from "./components/AddProject";
 
 function App() {
-    return (
-        <>
-            <div className="main">
-                <Tasks  />
-                <MonthCalendar />
-                <Sidebar />
-            </div>
-        </>
+    function App(){
+        return (
+            <>
+                <div className="main">
+                    <Tasks  />
+                    <MonthCalendar />
+                    <Sidebar />
+                </div>
+            </>
+        <div className="mainApp">
+            <Sidebar />
+            <AddProject />
+        </div>
     );
-}
-
-export default App;
+    }
